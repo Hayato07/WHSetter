@@ -1,0 +1,18 @@
+{
+    "name": "hayato07/img_width_height_setter",
+    "authors": [
+        {
+            "name": "hayato07",
+            "email": "0du38604360418k@gmail.com"
+        }
+    ],
+    "require": {
+        "paquettg/php-html-parser": "^3.1",
+        "voku/simple_html_dom": "^4.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "WHSetter\\": "class/"
+        }
+    }
+}
