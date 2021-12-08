@@ -2,8 +2,6 @@
 
 require_once __DIR__ . "/vendor/autoload.php";
 
-use WHSetter\Util;
-// use PHPHtmlParser\Dom;
 use voku\helper\HtmlDomParser;
 
 if (count($argv) < 2) {
@@ -31,11 +29,8 @@ if (!file_exists($output_dir)) {
     chmod($output_dir, 0777);
 }
 $output_real_path = realpath($output_dir);
-
 $output_real_file = add_trailing_slash($output_real_path) . "outputs2." . pathinfo($argv[1])["extension"];
 
-// $dom = new Dom;
-// $dom->loadFromFile($target_real_file);
 $dom = HtmlDomParser::file_get_html($target_real_file);
 
 // img width height追加処理
