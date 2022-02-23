@@ -43,11 +43,28 @@ foreach ($sources as $source) {
 foreach ($imgs as $img) {
     // srcsetは同じアスペクト比であることが基本なので、srcset部分の考慮はしない
     $src = $img->getAttribute('src');
+    if(empty($src)){
+        var_dump("srcが設定されていないsourceまたは、imgがあります");
+        continue;
+    }
 
     // todo https, httpへの対応
-    $img_info = getimagesize(realpath($target_real_dir . $src));
-    $width = $img_info[0];
-    $height = $img_info[1];
+    if(strpos($src, '.svg') === false) {
+        $img_info = getimagesize(realpath($target_real_dir . $src));
+        $width = $img_info[0] ?? false;
+        $height = $img_info[1] ?? false;
+    } else {
+        $svg = new SimpleXMLElement(realpath($target_real_dir . $src), 0, true);
+        $svg_attributes = $svg->attributes();
+        $width = $svg_attributes['width'] ?? false;
+        $height = $svg_attributes['height'] ?? false;
+    }
+
+    if($width === false || $height === false) {
+        var_dump(realpath($target_real_dir . $src));
+        continue;
+    }
+
 
     $img_width = $img->getAttribute('width');
     if (is_null($img_width) || $img_width === "") {
