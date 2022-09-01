@@ -42,7 +42,11 @@ foreach ($sources as $source) {
 
 foreach ($imgs as $img) {
     // srcsetは同じアスペクト比であることが基本なので、srcset部分の考慮はしない
-    $src = $img->getAttribute('src');
+    // sourceタグの場合には、srcsetを読み込む
+    $src = ($img->tagName === "source") 
+            ? $img->getAttribute('srcset')
+            : $img->getAttribute('src');
+
     if(empty($src)){
         var_dump("srcが設定されていないsourceまたは、imgがあります");
         continue;
@@ -68,12 +72,12 @@ foreach ($imgs as $img) {
 
     $img_width = $img->getAttribute('width');
     if (is_null($img_width) || $img_width === "") {
-        $img->setAttribute('width', $width);
+        $img->setAttribute('width', round($width));
     }
 
     $img_height = $img->getAttribute('height');
     if (is_null($img_height) || $img_height === "") {
-        $img->setAttribute('height', $height);
+        $img->setAttribute('height', round($height));
     }
 }
 
